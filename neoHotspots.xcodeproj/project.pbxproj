@@ -7,20 +7,26 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8210BFE217F6019C003AAE31 /* grfx_avail_view.png in Resources */ = {isa = PBXBuildFile; fileRef = 8210BFE017F6019C003AAE31 /* grfx_avail_view.png */; };
+		8210BFE317F6019C003AAE31 /* grfx_avail_view@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8210BFE117F6019C003AAE31 /* grfx_avail_view@2x.png */; };
+		8210BFE517F611E9003AAE31 /* hotspotsData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8210BFE417F611E9003AAE31 /* hotspotsData.plist */; };
+		8210BFE817F621A2003AAE31 /* grfx_btn_rendering.png in Resources */ = {isa = PBXBuildFile; fileRef = 8210BFE617F621A2003AAE31 /* grfx_btn_rendering.png */; };
+		8210BFE917F621A2003AAE31 /* grfx_btn_rendering@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8210BFE717F621A2003AAE31 /* grfx_btn_rendering@2x.png */; };
 		821672DD17F4A10300BADC9E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 821672DC17F4A10300BADC9E /* Foundation.framework */; };
 		821672DF17F4A10300BADC9E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 821672DE17F4A10300BADC9E /* CoreGraphics.framework */; };
 		821672E117F4A10300BADC9E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 821672E017F4A10300BADC9E /* UIKit.framework */; };
 		821672E717F4A10300BADC9E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 821672E517F4A10300BADC9E /* InfoPlist.strings */; };
 		821672E917F4A10300BADC9E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 821672E817F4A10300BADC9E /* main.m */; };
 		821672ED17F4A10300BADC9E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 821672EC17F4A10300BADC9E /* AppDelegate.m */; };
-		821672F017F4A10300BADC9E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 821672EE17F4A10300BADC9E /* Main.storyboard */; };
-		821672F317F4A10300BADC9E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 821672F217F4A10300BADC9E /* ViewController.m */; };
 		821672F517F4A10300BADC9E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 821672F417F4A10300BADC9E /* Images.xcassets */; };
 		821672FC17F4A10300BADC9E /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 821672FB17F4A10300BADC9E /* XCTest.framework */; };
 		821672FD17F4A10300BADC9E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 821672DC17F4A10300BADC9E /* Foundation.framework */; };
 		821672FE17F4A10300BADC9E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 821672E017F4A10300BADC9E /* UIKit.framework */; };
 		8216730617F4A10300BADC9E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8216730417F4A10300BADC9E /* InfoPlist.strings */; };
 		8216730817F4A10300BADC9E /* neoHotspotsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8216730717F4A10300BADC9E /* neoHotspotsTests.m */; };
+		8216731F17F4B47D00BADC9E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8216731D17F4B47D00BADC9E /* ViewController.m */; };
+		8216732017F4B47D00BADC9E /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8216731E17F4B47D00BADC9E /* ViewController.xib */; };
+		8216732817F4B7C000BADC9E /* neoHotspotsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8216732717F4B7C000BADC9E /* neoHotspotsView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +40,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8210BFE017F6019C003AAE31 /* grfx_avail_view.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grfx_avail_view.png; sourceTree = "<group>"; };
+		8210BFE117F6019C003AAE31 /* grfx_avail_view@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grfx_avail_view@2x.png"; sourceTree = "<group>"; };
+		8210BFE417F611E9003AAE31 /* hotspotsData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = hotspotsData.plist; sourceTree = "<group>"; };
+		8210BFE617F621A2003AAE31 /* grfx_btn_rendering.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grfx_btn_rendering.png; sourceTree = "<group>"; };
+		8210BFE717F621A2003AAE31 /* grfx_btn_rendering@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grfx_btn_rendering@2x.png"; sourceTree = "<group>"; };
 		821672D917F4A10300BADC9E /* neoHotspots.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = neoHotspots.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		821672DC17F4A10300BADC9E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		821672DE17F4A10300BADC9E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -44,15 +55,17 @@
 		821672EA17F4A10300BADC9E /* neoHotspots-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "neoHotspots-Prefix.pch"; sourceTree = "<group>"; };
 		821672EB17F4A10300BADC9E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		821672EC17F4A10300BADC9E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		821672EF17F4A10300BADC9E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		821672F117F4A10300BADC9E /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		821672F217F4A10300BADC9E /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		821672F417F4A10300BADC9E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		821672FA17F4A10300BADC9E /* neoHotspotsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = neoHotspotsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		821672FB17F4A10300BADC9E /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		8216730317F4A10300BADC9E /* neoHotspotsTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "neoHotspotsTests-Info.plist"; sourceTree = "<group>"; };
 		8216730517F4A10300BADC9E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		8216730717F4A10300BADC9E /* neoHotspotsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = neoHotspotsTests.m; sourceTree = "<group>"; };
+		8216731C17F4B47D00BADC9E /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		8216731D17F4B47D00BADC9E /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		8216731E17F4B47D00BADC9E /* ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ViewController.xib; sourceTree = "<group>"; };
+		8216732617F4B7C000BADC9E /* neoHotspotsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = neoHotspotsView.h; sourceTree = "<group>"; };
+		8216732717F4B7C000BADC9E /* neoHotspotsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = neoHotspotsView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,9 +127,16 @@
 			children = (
 				821672EB17F4A10300BADC9E /* AppDelegate.h */,
 				821672EC17F4A10300BADC9E /* AppDelegate.m */,
-				821672EE17F4A10300BADC9E /* Main.storyboard */,
-				821672F117F4A10300BADC9E /* ViewController.h */,
-				821672F217F4A10300BADC9E /* ViewController.m */,
+				8216731C17F4B47D00BADC9E /* ViewController.h */,
+				8216731D17F4B47D00BADC9E /* ViewController.m */,
+				8216731E17F4B47D00BADC9E /* ViewController.xib */,
+				8216732617F4B7C000BADC9E /* neoHotspotsView.h */,
+				8216732717F4B7C000BADC9E /* neoHotspotsView.m */,
+				8210BFE017F6019C003AAE31 /* grfx_avail_view.png */,
+				8210BFE117F6019C003AAE31 /* grfx_avail_view@2x.png */,
+				8210BFE617F621A2003AAE31 /* grfx_btn_rendering.png */,
+				8210BFE717F621A2003AAE31 /* grfx_btn_rendering@2x.png */,
+				8210BFE417F611E9003AAE31 /* hotspotsData.plist */,
 				821672F417F4A10300BADC9E /* Images.xcassets */,
 				821672E317F4A10300BADC9E /* Supporting Files */,
 			);
@@ -228,9 +248,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8210BFE517F611E9003AAE31 /* hotspotsData.plist in Resources */,
 				821672F517F4A10300BADC9E /* Images.xcassets in Resources */,
+				8216732017F4B47D00BADC9E /* ViewController.xib in Resources */,
 				821672E717F4A10300BADC9E /* InfoPlist.strings in Resources */,
-				821672F017F4A10300BADC9E /* Main.storyboard in Resources */,
+				8210BFE817F621A2003AAE31 /* grfx_btn_rendering.png in Resources */,
+				8210BFE917F621A2003AAE31 /* grfx_btn_rendering@2x.png in Resources */,
+				8210BFE217F6019C003AAE31 /* grfx_avail_view.png in Resources */,
+				8210BFE317F6019C003AAE31 /* grfx_avail_view@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -249,9 +274,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				821672F317F4A10300BADC9E /* ViewController.m in Sources */,
 				821672ED17F4A10300BADC9E /* AppDelegate.m in Sources */,
+				8216732817F4B7C000BADC9E /* neoHotspotsView.m in Sources */,
 				821672E917F4A10300BADC9E /* main.m in Sources */,
+				8216731F17F4B47D00BADC9E /* ViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,14 +306,6 @@
 				821672E617F4A10300BADC9E /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		821672EE17F4A10300BADC9E /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				821672EF17F4A10300BADC9E /* Base */,
-			);
-			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 		8216730417F4A10300BADC9E /* InfoPlist.strings */ = {
@@ -462,6 +480,7 @@
 				8216730D17F4A10300BADC9E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		8216730E17F4A10300BADC9E /* Build configuration list for PBXNativeTarget "neoHotspotsTests" */ = {
 			isa = XCConfigurationList;
@@ -470,6 +489,7 @@
 				8216731017F4A10300BADC9E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
