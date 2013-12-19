@@ -31,8 +31,9 @@ typedef enum {
 } HotspotCaptionAlignment;
 
 @optional
+-(void)neoHotspotsView:(neoHotspotsView *)hotspot withTag:(int)i;
 @end
-@interface neoHotspotsView : UIView
+@interface neoHotspotsView : UIView <UIGestureRecognizerDelegate>
 {
     UIImageView     *uiiv_hsImgView;
     UIImageView     *uiiv_arwImgView;
@@ -65,4 +66,7 @@ typedef enum {
 @property (nonatomic, readwrite) int            tagOfHs;
 
 @property (nonatomic, assign) HotspotCaptionAlignment labelAlignment;
+
+- (void)hotspotWithTagTapped:(UIGestureRecognizer*)recognizer;
+
 @end

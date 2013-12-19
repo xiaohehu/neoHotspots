@@ -22,6 +22,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 
+	_arr_hotspots = [[NSMutableArray alloc] init];
+	
     [self getDataForomPlist];
     
 }
@@ -43,7 +45,9 @@
         float hs_x = [str_x floatValue];
         float hs_y = [str_y floatValue];
         _myHotspots = [[neoHotspotsView alloc] initWithFrame:CGRectMake(hs_x, hs_y, 40, 40)];
-        
+        _myHotspots.delegate=self;
+		[_arr_hotspots addObject:_myHotspots];
+		
         //Get the angle of arrow
         NSString *str_angle = [[NSString alloc] initWithString:[hotspotItem objectForKey:@"angle"]];
         if ([str_angle isEqualToString:@""]) {
@@ -61,7 +65,7 @@
         //Get the caption of hotspot
         NSString *str_caption = [[NSString alloc] initWithString:[hotspotItem objectForKey:@"caption"]];
         _myHotspots.str_labelText = str_caption;
-        _myHotspots.labelAlignment = CaptionAlignmentTopLeft;
+        _myHotspots.labelAlignment = CaptionAlignmentBottom;
         
         //Get the type of hotspot
         NSString *str_type = [[NSString alloc] initWithString:[hotspotItem objectForKey:@"type"]];
@@ -112,7 +116,18 @@
 }
 
 #pragma -mark Delegate Method
-
+-(void)neoHotspotsView:(neoHotspotsView *)hotspot withTag:(int)i
+{
+	neoHotspotsView *tmp = _arr_hotspots[i];
+	NSString *fileType = [NSString stringWithFormat:@"Hotspot index is %i and is a type of %@",tmp.tagOfHs, tmp.str_typeOfHs];
+	
+	UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Hotspot Tapped!"
+                                                      message:fileType
+                                                     delegate:nil
+                                            cancelButtonTitle:@"OK"
+                                            otherButtonTitles:nil];
+    [message show];
+}
 
 
 

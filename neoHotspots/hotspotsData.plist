@@ -116,7 +116,7 @@
 	</dict>
 	<dict>
 		<key>type</key>
-		<string>movie</string>
+		<string>image</string>
 		<key>background</key>
 		<string>grfx_btn_rendering.png</string>
 		<key>xy</key>
