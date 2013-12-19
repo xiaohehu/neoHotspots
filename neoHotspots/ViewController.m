@@ -21,9 +21,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-
 	_arr_hotspots = [[NSMutableArray alloc] init];
-	
     [self getDataForomPlist];
     
 }
