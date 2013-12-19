@@ -112,10 +112,7 @@
 }
 
 #pragma -mark Delegate Method
--(void)currentTag:(int)hsTag andType:(NSString *)hsType fromSender:(neoHotspotsView *)sender
-{
-    //
-}
+
 
 
 

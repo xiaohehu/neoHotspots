@@ -31,7 +31,6 @@ typedef enum {
 } HotspotCaptionAlignment;
 
 @optional
--(void)currentTag:(int)hsTag andType:(NSString *)hsType fromSender:(neoHotspotsView *)sender;
 @end
 @interface neoHotspotsView : UIView
 {
