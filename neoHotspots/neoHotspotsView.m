@@ -217,6 +217,7 @@ static int arwPic = 30;
     uil_caption.textColor = [UIColor blackColor];
     uil_caption.font=[uil_caption.font fontWithSize:textFontSize];
     [uil_caption setTextAlignment:NSTextAlignmentCenter];
+    uil_caption.backgroundColor = [UIColor redColor];
     
     [self insertSubview:uil_caption aboveSubview:uiiv_arwImgView];
 }
