@@ -114,9 +114,9 @@
 }
 
 #pragma -mark Delegate Method
--(void)neoHotspotsView:(neoHotspotsView *)hotspot withTag:(int)i
+-(void)neoHotspotsView:(neoHotspotsView *)hotspot didSelectItemAtIndex:(NSInteger)index
 {
-	neoHotspotsView *tmp = _arr_hotspots[i];
+	neoHotspotsView *tmp = _arr_hotspots[index];
 	NSString *fileType = [NSString stringWithFormat:@"Hotspot index is %i and is a type of %@",tmp.tagOfHs, tmp.str_typeOfHs];
 	
 	UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Hotspot Tapped!"

@@ -31,7 +31,7 @@ typedef enum {
 } HotspotCaptionAlignment;
 
 @optional
--(void)neoHotspotsView:(neoHotspotsView *)hotspot withTag:(int)i;
+- (void)neoHotspotsView:(neoHotspotsView *)hotspot didSelectItemAtIndex:(NSInteger)index;
 @end
 @interface neoHotspotsView : UIView <UIGestureRecognizerDelegate>
 {

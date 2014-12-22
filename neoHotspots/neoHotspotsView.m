@@ -344,7 +344,7 @@ static int arwPic = 30;
 
 - (void)hotspotWithTagTapped:(UIGestureRecognizer*)recognizer
 {
-	[self.delegate neoHotspotsView:self withTag:tagOfHs];
+	[self.delegate neoHotspotsView:self didSelectItemAtIndex:tagOfHs];
 }
 
 #pragma -mark Delegate Method
