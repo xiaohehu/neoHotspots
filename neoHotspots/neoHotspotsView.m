@@ -165,6 +165,10 @@ static int arwPic = 30;
         withArw = YES;
         labelAlignment = CaptionAlignmentBottom;
         [self updateIndicators];
+		UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
+												 initWithTarget:self
+												 action:@selector(hotspotWithTagTapped:)];
+		[self addGestureRecognizer:tap];
     }
     return self;
 }
@@ -200,7 +204,7 @@ static int arwPic = 30;
     [self addSubview: uiiv_arwImgView];
     [uiiv_arwImgView setAlpha:1.0];
     
-    [self currentTag:uiiv_hsImgView.tag  andType:str_typeOfHs fromSender:self];
+    //[self currentTag:uiiv_hsImgView.tag  andType:str_typeOfHs fromSender:self];
 }
 
 -(void)initHotspotLabel
@@ -338,11 +342,21 @@ static int arwPic = 30;
 }
 */
 
-#pragma -mark Delegate Method
--(void)currentTag:(int)hsTag andType:(NSString *)hsType fromSender:(neoHotspotsView *)sender
+- (void)hotspotWithTagTapped:(UIGestureRecognizer*)recognizer
 {
-    [self.delegate currentTag:hsTag andType:hsType fromSender:sender];
+	[self.delegate neoHotspotsView:self didSelectItemAtIndex:tagOfHs];
 }
+
+#pragma -mark Delegate Method
+//-(void)neoHotspotsView:(neoHotspotsView *)hotspot indexOfTapped:(int)i
+//{
+//	//[self.delegate hotspotWithTagTapped:i];
+//}
+
+//-(void)currentTag:(int)hsTag andType:(NSString *)hsType fromSender:(neoHotspotsView *)sender
+//{
+//    [self.delegate currentTag:hsTag andType:hsType fromSender:sender];
+//}
 
 
 
