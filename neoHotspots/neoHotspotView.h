@@ -10,23 +10,25 @@
 @class neoHotspotView;
 @protocol neoHotspotViewDelegate
 typedef enum {
-    CaptionAlignmentBottom,     //0
+    CaptionAlignmentBottom1,     //0
     
-    CaptionAlignmentTop,        //1
+    CaptionAlignmentTop1,        //1
     
-    CaptionAlignmentLeft,       //2
+    CaptionAlignmentLeft1,       //2
     
-    CaptionAlignmentRight,      //3
+    CaptionAlignmentRight1,      //3
     
-    CaptionAlignmentTopLeft,    //4
+    CaptionAlignmentTopLeft1,    //4
     
-    CaptionAlignmentTopRight,   //5
+    CaptionAlignmentTopRight1,   //5
     
-    CaptionAlignmentBottomLeft, //6
+    CaptionAlignmentBottomLeft1, //6
     
-    CaptionAlignmentBottomRight //7
+    CaptionAlignmentBottomRight1 //7
     
-} HotspotCaptionAlignment;
+} HotspotCaptionAlignment1;
+@optional
+- (void)didSelectecHotspot:(neoHotspotView *)hotspotView atIndex:(NSInteger)index;
 @end
 
 @interface neoHotspotView : UIView
@@ -38,8 +40,11 @@ typedef enum {
     UILabel             *uil_caption;
 }
 
+@property (nonatomic, strong) id                            delegate;
 @property (nonatomic, strong) NSDictionary                  *dict_rawData;
-@property (nonatomic, assign) HotspotCaptionAlignment       labelAlignment;
+@property (nonatomic, assign) HotspotCaptionAlignment1      labelAlignment;
+@property (nonatomic, strong) NSString                      *contentType;
+@property (nonatomic, strong) NSString                      *contentFileName;
 
 
 - (id)initWithHotspotInfo:(NSDictionary *)hotspotInfo;

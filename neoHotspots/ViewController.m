@@ -8,8 +8,8 @@
 
 #import "ViewController.h"
 #import "neoHotspotsView.h"
-
-@interface ViewController ()
+#import "neoHotspotView.h"
+@interface ViewController ()<neoHotspotViewDelegate>
 
 @property (nonatomic, strong) neoHotspotsView *myHotspots;
 @property (nonatomic, strong) NSMutableArray *arr_hotspots;
@@ -22,9 +22,36 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 	_arr_hotspots = [[NSMutableArray alloc] init];
-    [self getDataForomPlist];
+//    [self getDataForomPlist];
+    [self loadHotspotView];
     
 }
+
+
+- (void)loadHotspotView
+{
+    NSString *path = [[NSBundle mainBundle] pathForResource:
+                      @"hotspotsData" ofType:@"plist"];
+    NSMutableArray *totalDataArray = [[NSMutableArray alloc] initWithContentsOfFile:path];
+    for (int i = 0; i < [totalDataArray count]; i++)
+    {
+        NSDictionary *hotspot_raw = [[NSDictionary alloc] initWithDictionary:totalDataArray[i]];
+        neoHotspotView *hotspot2 = [[neoHotspotView alloc] initWithHotspotInfo:hotspot_raw];
+        hotspot2.labelAlignment = i;
+        hotspot2.tag = i;
+        hotspot2.delegate = self;
+        [self.view addSubview: hotspot2];
+    }
+}
+
+
+- (void)didSelectecHotspot:(neoHotspotView *)hotspotView atIndex:(NSInteger)index
+{
+    NSLog(@"The tapped index is %i", (int)index);
+}
+
+
+
 
 -(void)getDataForomPlist
 {
