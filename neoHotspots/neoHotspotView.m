@@ -18,6 +18,7 @@ static float    kGap = 10.0;
 @synthesize delegate;
 @synthesize contentType;
 @synthesize contentFileName;
+@synthesize showArrow;
 
 - (id)initWithHotspotInfo:(NSDictionary *)hotspotInfo
 {
@@ -149,6 +150,9 @@ static float    kGap = 10.0;
     [self addSubview: uiiv_hotspotBG];
     [self addSubview: uil_caption];
     [self addGestureToView];
+    if (showArrow) {
+        [self createArrow];
+    }
 }
 
 - (void)addGestureToView
@@ -171,6 +175,30 @@ static float    kGap = 10.0;
 - (void)tapHotspot:(UIGestureRecognizer *)gesture
 {
     [self.delegate didSelectecHotspot:self atIndex:self.tag];
+}
+
+- (void)createArrow
+{
+    float width = uiiv_hotspotBG.frame.size.width;
+    float height = uiiv_hotspotBG.frame.size.height;
+    float radius = sqrtf(width*width + height*height);
+    
+    uiiv_arrowImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"grfx_avail_view.png"]];
+    uiiv_arrowImg.frame = CGRectMake((uiiv_hotspotBG.frame.size.width - uiiv_arrowImg.frame.size.width)/2 + uiiv_hotspotBG.frame.origin.x, uiiv_hotspotBG.frame.origin.y - (radius-uiiv_hotspotBG.frame.size.height) - uiiv_arrowImg.frame.size.height, uiiv_arrowImg.frame.size.width, uiiv_arrowImg.frame.size.height);
+    [self addSubview: uiiv_arrowImg];
+    
+    if ([dict_rawData objectForKey:@"angle"]) {
+        arrowAngle = [[dict_rawData objectForKey:@"angle"] floatValue];
+    }
+    else {
+        arrowAngle = 0.0;
+    }
+    
+    CGRect oldFrame = uiiv_arrowImg.frame;
+    uiiv_arrowImg.layer.anchorPoint = CGPointMake(0.5, radius/2/uiiv_arrowImg.frame.size.height+1);
+    uiiv_arrowImg.frame = oldFrame;
+    
+    uiiv_arrowImg.transform = CGAffineTransformMakeRotation((arrowAngle/180)*M_PI);
 }
 
 /*

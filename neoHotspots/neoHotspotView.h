@@ -37,9 +37,12 @@ typedef enum {
     float               y_Value;
     CGSize              labelSize;
     UIImageView         *uiiv_hotspotBG;
+    UIImageView         *uiiv_arrowImg;
     UILabel             *uil_caption;
+    float               arrowAngle;
 }
 
+@property (nonatomic, readwrite) BOOL                       showArrow;
 @property (nonatomic, strong) id                            delegate;
 @property (nonatomic, strong) NSDictionary                  *dict_rawData;
 @property (nonatomic, assign) HotspotCaptionAlignment1      labelAlignment;

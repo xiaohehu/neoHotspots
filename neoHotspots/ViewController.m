@@ -40,6 +40,7 @@
         hotspot2.labelAlignment = i;
         hotspot2.tag = i;
         hotspot2.delegate = self;
+        hotspot2.showArrow = YES;
         [self.view addSubview: hotspot2];
     }
 }
