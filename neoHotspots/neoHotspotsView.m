@@ -1,373 +1,220 @@
 //
-//  neoHotspotsView.m
+//  neoHotspotView.m
 //  neoHotspots
 //
-//  Created by Xiaohe Hu on 9/26/13.
-//  Copyright (c) 2013 Xiaohe Hu. All rights reserved.
+//  Created by Xiaohe Hu on 12/22/14.
+//  Copyright (c) 2014 Xiaohe Hu. All rights reserved.
 //
 
 #import "neoHotspotsView.h"
 
-//Change Size of Arrow Here!
-static int arwPic = 30;
+static NSString *kFontName = @"Helvetica";
+static float    kFontSize = 17.0;
+static float    kGap = 10.0;
 
 @implementation neoHotspotsView
-
-
-@synthesize delegate ,uiiv_hsImgView, uiiv_arwImgView, arwAngle, hotspotBgName;
-@synthesize bgColor, timeRotate, str_labelText, uil_caption;
-@synthesize tagOfHs, str_typeOfHs;
+@synthesize dict_rawData;
 @synthesize labelAlignment;
+@synthesize delegate;
+@synthesize contentType;
+@synthesize contentFileName;
+@synthesize showArrow;
 
-#pragma -mark Setting parameters
-// Get parameter for time of rotate animation
--(void)setTimeRotate:(float)timeR
+- (id)initWithHotspotInfo:(NSDictionary *)hotspotInfo
 {
-    if (timeR) {
-        timeRotate = timeR;
-    }
-    if (timeR == 0.0f) {
-        timeRotate = timeR;
-    }
-    timeIsSet = YES;
-    [self checkAinimationTime];
-}
-// Get label's text (if there is no caption text the label won't be init)
--(void)setStr_labelText:(NSString *)labelText
-{
-    if (labelText == nil) {
-        return;
-    }
-    else
-    {
-    str_labelText = labelText;
-    [self initHotspotLabel];
-    }
-}
-//Get different mode of label's alignment
--(void)setLabelAlignment:(HotspotCaptionAlignment)labelAlign
-{
-    labelAlignment = labelAlign;
-    [uil_caption removeFromSuperview];
-    [self initHotspotLabel];
-}
-
-// Get angle of arrow
--(void)setArwAngle:(float)angle
-{
-    if (angle) {
-        arwAngle = angle;
-        [self checkAinimationTime];
-    }
-    if (angle == 0.0) {
-        arwAngle = angle;
-        [self checkAinimationTime];
-    }
-    else
-    {
-        withArw = NO;
-    }
-}
-// Get types of hotspots
--(void)setStr_typeOfHs:(NSString *)str_type
-{
-    str_typeOfHs = str_type;
-}
-// Get tags of hotspots (Usually it's index of plist)
--(void)setTagOfHs:(int)tagOfHotspot
-{
-    tagOfHs = tagOfHotspot;
-    uiiv_hsImgView.tag = tagOfHotspot;
-}
-// Get background color of hotspots
--(void)setBgColor:(UIColor *)bg
-{
-    bgColor = bg;
-    [self checkBgImg];
-}
-
-//++++++++++++++++++++FIX THIS BUG WIHT BG COLOR FUNCTIONS!!!!!!++++++++++++++++++++++++++++++++++
-//-(void)setBackgroundColor:(UIColor *)backgroundColor
-//{
-//    bgColor = backgroundColor;
-//    [self checkBgImg];
-//    return;
-//}
-
-// Get background image file's name
--(void)setHotspotBgName:(NSString *)BgName
-{
-    if (BgName == nil) {
-        return;
-    }
-    else
-    {
-        hotspotBgName = BgName;
-        [self checkBgImg];
-    }
-}
-
-#pragma -mark Check Different Conditions
-// According to the parameter of animation rotate the arrow with different methods.
--(void)checkAinimationTime
-{
-    if (timeIsSet == YES && timeRotate != 0) {
-        [uiiv_arwImgView removeFromSuperview];
-        [self initArrowImgView];
-        [self rotateViewAnimated:uiiv_arwImgView withDuration:self.timeRotate byAngle:(arwAngle/360)*2*M_PI];
-        //uiiv_arwImgView.transform = CGAffineTransformMakeRotation((arwAngle/360)*2*M_PI);
-    }
-    else if (timeIsSet == YES && timeRotate == 0)
-    {
-        [uiiv_arwImgView removeFromSuperview];
-        [self initArrowImgView];
-        [self rotateViewAnimated:uiiv_arwImgView withDuration:self.timeRotate byAngle:(arwAngle/360)*2*M_PI];
-        //uiiv_arwImgView.transform = CGAffineTransformMakeRotation((arwAngle/360)*2*M_PI);
-        
-    }
-    else if (withArw == NO)
-    {
-        return;
-    }
-    else
-    {
-        [uiiv_arwImgView removeFromSuperview];
-        [self initArrowImgView];
-        uiiv_arwImgView.transform = CGAffineTransformMakeRotation((arwAngle/360)*2*M_PI);
-    }
-}
-// If there is no background image make it a square with a color.
--(void)checkBgImg
-{
-    if (hotspotBgName == nil) {
-        [self setBackgroundColor:bgColor];
-    }
-    else
-    {
-        [self addBgImgToHotspot];
-    }
-}
-
--(void)addBgImgToHotspot
-{
-    [self setBackgroundColor:[UIColor clearColor]];
-    [uiiv_hsImgView setImage:[UIImage imageNamed:hotspotBgName]];
-}
-
-#pragma -mark Init Part
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self)
-    {
-        [self initHotspotImgView];
-        timeRotate = 0.0;
-        withArw = YES;
-        labelAlignment = CaptionAlignmentBottom;
-        [self updateIndicators];
-		UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
-												 initWithTarget:self
-												 action:@selector(hotspotWithTagTapped:)];
-		[self addGestureRecognizer:tap];
+    self = [super init];
+    if (self) {
+        dict_rawData = [[NSDictionary alloc] initWithDictionary:hotspotInfo];
     }
     return self;
 }
 
--(void)initHotspotImgView
+- (void)willMoveToSuperview:(UIView *)newSuperview
 {
-    uiiv_hsImgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
-    [uiiv_hsImgView setAlpha:1.0];
-    [self addSubview: uiiv_hsImgView];
+    [self prepareData];
 }
 
--(void)initArrowImgView
+- (void)prepareData
 {
-    //The track of arrow's animation is the circumference of hotspot's image(square)
-    //According to the track, calculate X and Y
-    float arwX = (uiiv_hsImgView.frame.size.width - arwPic)/2;
-    float arwY = -((sqrt(2)-1)/2)* uiiv_hsImgView.frame.size.height- arwPic ;
-    uiiv_arwImgView = [[UIImageView alloc] initWithFrame:CGRectMake(arwX, arwY, arwPic, arwPic)];
+    //Get the position of Hs
+    NSString *str_position = [[NSString alloc] initWithString:[dict_rawData objectForKey:@"xy"]];
+    NSRange range = [str_position rangeOfString:@","];
+    NSString *str_x = [str_position substringWithRange:NSMakeRange(0, range.location)];
+    NSString *str_y = [str_position substringFromIndex:(range.location + 1)];
+    x_Value = [str_x floatValue];
+    y_Value = [str_y floatValue];
     
-    //Change anchor point of arrow to the center of hotspot's image.
-    float anchorX = 0.5;
-    float anchorY =  (uiiv_hsImgView.frame.size.height * sqrt(2)/2)/uiiv_arwImgView.frame.size.height+1 ;
-    uiiv_arwImgView.layer.anchorPoint = CGPointMake(anchorX, anchorY);
+    contentType = [[NSString alloc] initWithString:[dict_rawData objectForKey:@"type"]];
+    contentFileName = [[NSString alloc] initWithString:[dict_rawData objectForKey:@"fileName"]];
     
-    /*After changing anchor point, relative position of arrow to hotspot was also changed. Reset the position of
-    arrow according to the original relative position.*/
-    float theDistance = uiiv_hsImgView.frame.size.height * sqrt(2)/2;
-    CGRect frame = uiiv_arwImgView.frame;
-    frame.origin.y = uiiv_arwImgView.frame.origin.y + uiiv_arwImgView.frame.size.height*0.5 + theDistance;
-    uiiv_arwImgView.frame = frame;
+    uiiv_hotspotBG = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[dict_rawData objectForKey:@"background"]]];
     
-    [uiiv_arwImgView setImage:[UIImage imageNamed:@"grfx_avail_view.png"]];
-    [self addSubview: uiiv_arwImgView];
-    [uiiv_arwImgView setAlpha:1.0];
-    
-    //[self currentTag:uiiv_hsImgView.tag  andType:str_typeOfHs fromSender:self];
-}
-
--(void)initHotspotLabel
-{
-    [self updateIndicators];
-    
-    float textFontSize = 10.0f;
-    [uil_caption setBackgroundColor:[UIColor clearColor]];
-    [uil_caption setText:str_labelText];
-    uil_caption.textColor = [UIColor blackColor];
-    uil_caption.font=[uil_caption.font fontWithSize:textFontSize];
-    [uil_caption setTextAlignment:NSTextAlignmentCenter];
-    uil_caption.backgroundColor = [UIColor redColor];
-    
-    [self insertSubview:uil_caption aboveSubview:uiiv_arwImgView];
-}
-
-//According to different alignment mode change the location of label.
-//By default the with of label is 2* with of hotspot hand label's height is same as that of hotspot.
-- (void)updateIndicators
-{
-    [uil_caption removeFromSuperview];
-    if (labelAlignment == CaptionAlignmentTop)
-    {
-        float label_X = uiiv_hsImgView.frame.origin.x - uiiv_hsImgView.frame.size.height/2;
-        float label_Y = uiiv_hsImgView.frame.origin.y - ((sqrt(2)+1)/2)* uiiv_hsImgView.frame.size.height;
-        float label_W = uiiv_hsImgView.frame.size.width*2;
-        float label_H = uiiv_hsImgView.frame.size.height;
-        uil_caption = [[UILabel alloc] initWithFrame:CGRectMake(label_X, label_Y, label_W, label_H)];
-        [uil_caption setTextAlignment:NSTextAlignmentCenter];
-    }
-    if (labelAlignment == CaptionAlignmentTopRight) {
-        float label_X = uiiv_hsImgView.frame.origin.x + uiiv_hsImgView.frame.size.width;
-        float label_Y = uiiv_hsImgView.frame.origin.y - uiiv_hsImgView.frame.size.height;
-        float label_W = uiiv_hsImgView.frame.size.width*2;
-        float label_H = uiiv_hsImgView.frame.size.height;
-        uil_caption = [[UILabel alloc] initWithFrame:CGRectMake(label_X, label_Y, label_W, label_H)];
-        [uil_caption setTextAlignment:NSTextAlignmentRight];
-    }
-    if (labelAlignment == CaptionAlignmentRight) {
-        float label_X = uiiv_hsImgView.frame.origin.x + ((sqrt(2)+1)/2)* uiiv_hsImgView.frame.size.width;
-        float label_Y = uiiv_hsImgView.frame.origin.y;
-        float label_W = uiiv_hsImgView.frame.size.width*2;
-        float label_H = uiiv_hsImgView.frame.size.height;
-        uil_caption = [[UILabel alloc] initWithFrame:CGRectMake(label_X, label_Y, label_W, label_H)];
-        [uil_caption setTextAlignment:NSTextAlignmentRight];
-    }
-    if (labelAlignment == CaptionAlignmentBottomRight) {
-        float label_X = uiiv_hsImgView.frame.origin.x + uiiv_hsImgView.frame.size.width;
-        float label_Y = uiiv_hsImgView.frame.origin.y + uiiv_hsImgView.frame.size.height;
-        float label_W = uiiv_hsImgView.frame.size.width*2;
-        float label_H = uiiv_hsImgView.frame.size.height;
-        uil_caption = [[UILabel alloc] initWithFrame:CGRectMake(label_X, label_Y, label_W, label_H)];
-        [uil_caption setTextAlignment:NSTextAlignmentRight];
-    }
-    if (labelAlignment == CaptionAlignmentBottom) {
-        float label_X = uiiv_hsImgView.frame.origin.x - uiiv_hsImgView.frame.size.height/2;
-        float label_Y = uiiv_hsImgView.frame.origin.y + ((sqrt(2)+1)/2)* uiiv_hsImgView.frame.size.height;
-        float label_W = uiiv_hsImgView.frame.size.width*2;
-        float label_H = uiiv_hsImgView.frame.size.height;
-        uil_caption = [[UILabel alloc] initWithFrame:CGRectMake(label_X, label_Y, label_W, label_H)];
-        [uil_caption setTextAlignment:NSTextAlignmentCenter];
-    }
-    if (labelAlignment == CaptionAlignmentBottomLeft) {
-        float label_X = uiiv_hsImgView.frame.origin.x - uiiv_hsImgView.frame.size.width*2;
-        float label_Y = uiiv_hsImgView.frame.origin.y + uiiv_hsImgView.frame.size.height;
-        float label_W = uiiv_hsImgView.frame.size.width*2;
-        float label_H = uiiv_hsImgView.frame.size.height;
-        uil_caption = [[UILabel alloc] initWithFrame:CGRectMake(label_X, label_Y, label_W, label_H)];
-        [uil_caption setTextAlignment:NSTextAlignmentLeft];
-    }
-    if (labelAlignment == CaptionAlignmentLeft) {
-        float label_X = uiiv_hsImgView.frame.origin.x - ((sqrt(2)-1)/2)* uiiv_hsImgView.frame.size.width - uiiv_hsImgView.frame.size.width*2;
-        float label_Y = uiiv_hsImgView.frame.origin.y;
-        float label_W = uiiv_hsImgView.frame.size.width*2;
-        float label_H = uiiv_hsImgView.frame.size.height;
-        uil_caption = [[UILabel alloc] initWithFrame:CGRectMake(label_X, label_Y, label_W, label_H)];
-        [uil_caption setTextAlignment:NSTextAlignmentLeft];
-    }
-    if (labelAlignment == CaptionAlignmentTopLeft) {
-        float label_X = uiiv_hsImgView.frame.origin.x - uiiv_hsImgView.frame.size.width*2;
-        float label_Y = uiiv_hsImgView.frame.origin.y - uiiv_hsImgView.frame.size.height;
-        float label_W = uiiv_hsImgView.frame.size.width*2;
-        float label_H = uiiv_hsImgView.frame.size.height;
-        uil_caption = [[UILabel alloc] initWithFrame:CGRectMake(label_X, label_Y, label_W, label_H)];
-        [uil_caption setTextAlignment:NSTextAlignmentLeft];
-    }
-//    NSLog(@"%u", labelAlignment );
-    return;
-}
-
-// Rotate Animation fuction makes the arrow always rotates in clockwise direction.
-// Duration time and rotate angle are needed.
-- (void) rotateViewAnimated:(UIView*)view
-               withDuration:(CFTimeInterval)duration
-                    byAngle:(CGFloat)angle
-{
-    CABasicAnimation *rotationAnimation;
-    rotationAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
-    rotationAnimation.fromValue = 0;
-    rotationAnimation.toValue = [NSNumber numberWithFloat:angle];
-    rotationAnimation.duration = duration;
-    rotationAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-    [rotationAnimation setRemovedOnCompletion:NO];
-    [rotationAnimation setFillMode:kCAFillModeForwards];
-    [view.layer addAnimation:rotationAnimation forKey:@"rotationAnimation"];
-}
-
-/*
- If hotspots are wanted to be resized after doing something, please rebuild this function.
- 
--(void)resizeToFitSubviews
-{
-    float w = 0;
-    float h = 0;
-    float x = 0;
-    float y = 0;
-    
-    for (UIView *v in [self subviews]) {
-        float fw = fabsf(v.frame.origin.x) + fabsf(v.frame.size.width);
-        float fh = fabsf(v.frame.origin.y) + fabsf(v.frame.size.height);
+    if ([dict_rawData objectForKey:@"caption"]) {
+        labelSize = [[dict_rawData objectForKey:@"caption"] sizeWithAttributes:
+                     @{NSFontAttributeName:
+                           [UIFont fontWithName:kFontName size:kFontSize]}];
         
-        float fx = v.frame.origin.x;
-        float fy = v.frame.origin.y;
-        NSLog(@"fw: %f    fh: %f", fw, fh);
-        NSLog(@"fx: %f    fy: %F", fx, fy);
-        
-        w = MAX(fw, w);
-        h = MAX(fh, h);
-        
-        x = MIN(fx, x);
-        y = MIN(fy, y);
+        [self createCaptionLabel];
+    }
+    else {
+        uiiv_hotspotBG.frame = CGRectMake(0.0, 0.0, uiiv_hotspotBG.frame.size.width, uiiv_hotspotBG.frame.size.height);
+        if (showArrow) {
+            [self createArrow];
+        }
     }
     
-    NSLog(@"%@", [self description]);
 }
-*/
 
-- (void)hotspotWithTagTapped:(UIGestureRecognizer*)recognizer
+- (void)createCaptionLabel
 {
-	[self.delegate neoHotspotsView:self didSelectItemAtIndex:tagOfHs];
+    CGFloat offsetX = 0.0;
+    CGFloat offsetY = 0.0;
+    switch (labelAlignment) {
+        case 0:
+        {
+            if (labelSize.width > uiiv_hotspotBG.frame.size.width)
+            {
+                offsetX = (labelSize.width - uiiv_hotspotBG.frame.size.width)/2;
+            }
+            else
+            {
+                offsetX = 0.0;
+            }
+            self.frame = CGRectMake(x_Value - offsetX, y_Value, labelSize.width, uiiv_hotspotBG.frame.size.height + kGap + labelSize.height);
+            uiiv_hotspotBG.frame = CGRectMake(offsetX, 0.0, uiiv_hotspotBG.frame.size.width, uiiv_hotspotBG.frame.size.height);
+            uil_caption = [[UILabel alloc] initWithFrame:CGRectMake(0.0, uiiv_hotspotBG.frame.size.height + kGap, labelSize.width, labelSize.height)];
+            break;
+        }
+        case 1:
+        {
+            offsetY = labelSize.height + kGap;
+            if (labelSize.width > uiiv_hotspotBG.frame.size.width)
+            {
+                offsetX = (labelSize.width - uiiv_hotspotBG.frame.size.width)/2;
+            }
+            else
+            {
+                offsetX = 0.0;
+            }
+            self.frame = CGRectMake(x_Value - offsetX, y_Value - offsetY, labelSize.width, uiiv_hotspotBG.frame.size.height + kGap + labelSize.height);
+            uiiv_hotspotBG.frame = CGRectMake(offsetX, offsetY, uiiv_hotspotBG.frame.size.width, uiiv_hotspotBG.frame.size.height);
+            uil_caption = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, labelSize.width, labelSize.height)];
+            break;
+        }
+        case 2:
+        {
+            offsetX = labelSize.width + kGap;
+            self.frame = CGRectMake(x_Value - offsetX, y_Value, labelSize.width + kGap + uiiv_hotspotBG.frame.size.width, uiiv_hotspotBG.frame.size.height);
+            uiiv_hotspotBG.frame = CGRectMake(offsetX, offsetY, uiiv_hotspotBG.frame.size.width, uiiv_hotspotBG.frame.size.height);
+            uil_caption = [[UILabel alloc] initWithFrame:CGRectMake(0.0, (uiiv_hotspotBG.frame.size.height - labelSize.height)/2, labelSize.width, labelSize.height)];
+            break;
+        }
+        case 3:
+        {
+            self.frame = CGRectMake(x_Value, y_Value, labelSize.width + kGap + uiiv_hotspotBG.frame.size.width, uiiv_hotspotBG.frame.size.height);
+            uiiv_hotspotBG.frame = CGRectMake(offsetX, offsetY, uiiv_hotspotBG.frame.size.width, uiiv_hotspotBG.frame.size.height);
+            uil_caption = [[UILabel alloc] initWithFrame:CGRectMake(uiiv_hotspotBG.frame.size.width + kGap, (uiiv_hotspotBG.frame.size.height - labelSize.height)/2, labelSize.width, labelSize.height)];
+            break;
+        }
+        case 4:
+        {
+            offsetX = labelSize.width + kGap;
+            offsetY = labelSize.height;
+            self.frame = CGRectMake(x_Value - offsetX, y_Value - offsetY, labelSize.width + kGap + uiiv_hotspotBG.frame.size.width, uiiv_hotspotBG.frame.size.height + labelSize.height);
+            uiiv_hotspotBG.frame = CGRectMake(offsetX, offsetY, uiiv_hotspotBG.frame.size.width, uiiv_hotspotBG.frame.size.height);
+            uil_caption = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, labelSize.width, labelSize.height)];
+            break;
+        }
+        case 5:
+        {
+            offsetY = labelSize.height;
+            self.frame = CGRectMake(x_Value - offsetX, y_Value - offsetY, labelSize.width + kGap + uiiv_hotspotBG.frame.size.width, uiiv_hotspotBG.frame.size.height + labelSize.height);
+            uiiv_hotspotBG.frame = CGRectMake(offsetX, offsetY, uiiv_hotspotBG.frame.size.width, uiiv_hotspotBG.frame.size.height);
+            uil_caption = [[UILabel alloc] initWithFrame:CGRectMake(uiiv_hotspotBG.frame.size.width + kGap, 0.0, labelSize.width, labelSize.height)];
+            break;
+        }
+        case 6:
+        {
+            offsetX = labelSize.width + kGap;
+            self.frame = CGRectMake(x_Value - offsetX, y_Value, labelSize.width + kGap + uiiv_hotspotBG.frame.size.width, uiiv_hotspotBG.frame.size.height + labelSize.height);
+            uiiv_hotspotBG.frame = CGRectMake(offsetX, offsetY, uiiv_hotspotBG.frame.size.width, uiiv_hotspotBG.frame.size.height);
+            uil_caption = [[UILabel alloc] initWithFrame:CGRectMake(0.0, uiiv_hotspotBG.frame.size.height, labelSize.width, labelSize.height)];
+            break;
+        }
+        case 7:
+        {
+            self.frame = CGRectMake(x_Value, y_Value, labelSize.width + kGap + uiiv_hotspotBG.frame.size.width, uiiv_hotspotBG.frame.size.height + labelSize.height);
+            uiiv_hotspotBG.frame = CGRectMake(offsetX, offsetY, uiiv_hotspotBG.frame.size.width, uiiv_hotspotBG.frame.size.height);
+            uil_caption = [[UILabel alloc] initWithFrame:CGRectMake(uiiv_hotspotBG.frame.size.width + kGap, uiiv_hotspotBG.frame.size.height, labelSize.width, labelSize.height)];
+            break;
+        }
+        default:
+            break;
+    }
+    
+    uil_caption.text = [dict_rawData objectForKey:@"caption"];
+    uil_caption.font = [UIFont fontWithName:kFontName size:kFontSize];
+    self.backgroundColor = [UIColor redColor];
+    uil_caption.backgroundColor = [UIColor whiteColor];
+    uiiv_hotspotBG.backgroundColor = [UIColor greenColor];
+    [self addSubview: uiiv_hotspotBG];
+    [self addSubview: uil_caption];
+    [self addGestureToView];
+    if (showArrow) {
+        [self createArrow];
+    }
 }
 
-#pragma -mark Delegate Method
-//-(void)neoHotspotsView:(neoHotspotsView *)hotspot indexOfTapped:(int)i
-//{
-//	//[self.delegate hotspotWithTagTapped:i];
-//}
+- (void)addGestureToView
+{
+    self.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tapOnView = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapHotspot:)];
+    tapOnView.numberOfTapsRequired = 1;
+    [self addGestureRecognizer:tapOnView];
+//    UITapGestureRecognizer *tapOnImage = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapHotspot:)];
+//    tapOnImage.numberOfTapsRequired = 1;
+//    uiiv_hotspotBG.userInteractionEnabled = YES;
+//    [uiiv_hotspotBG addGestureRecognizer:tapOnImage];
+//    
+//    UITapGestureRecognizer *tapOnLabel = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapHotspot:)];
+//    tapOnLabel.numberOfTapsRequired = 1;
+//    uil_caption.userInteractionEnabled = YES;
+//    [uil_caption addGestureRecognizer: tapOnLabel];
+}
 
-//-(void)currentTag:(int)hsTag andType:(NSString *)hsType fromSender:(neoHotspotsView *)sender
-//{
-//    [self.delegate currentTag:hsTag andType:hsType fromSender:sender];
-//}
+- (void)tapHotspot:(UIGestureRecognizer *)gesture
+{
+    [self.delegate neoHotspotsView:self didSelectItemAtIndex:self.tag];
+}
 
-
-
-
+- (void)createArrow
+{
+    float width = uiiv_hotspotBG.frame.size.width;
+    float height = uiiv_hotspotBG.frame.size.height;
+    float radius = sqrtf(width*width + height*height);
+    
+    uiiv_arrowImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"grfx_avail_view.png"]];
+    uiiv_arrowImg.frame = CGRectMake((uiiv_hotspotBG.frame.size.width - uiiv_arrowImg.frame.size.width)/2 + uiiv_hotspotBG.frame.origin.x, uiiv_hotspotBG.frame.origin.y - (radius-uiiv_hotspotBG.frame.size.height) - uiiv_arrowImg.frame.size.height, uiiv_arrowImg.frame.size.width, uiiv_arrowImg.frame.size.height);
+    [self addSubview: uiiv_arrowImg];
+    
+    if ([dict_rawData objectForKey:@"angle"]) {
+        arrowAngle = [[dict_rawData objectForKey:@"angle"] floatValue];
+    }
+    else {
+        arrowAngle = 0.0;
+    }
+    
+    CGRect oldFrame = uiiv_arrowImg.frame;
+    uiiv_arrowImg.layer.anchorPoint = CGPointMake(0.5, radius/2/uiiv_arrowImg.frame.size.height+1);
+    uiiv_arrowImg.frame = oldFrame;
+    
+    uiiv_arrowImg.transform = CGAffineTransformMakeRotation((arrowAngle/180)*M_PI);
+}
 
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
+- (void)drawRect:(CGRect)rect {
     // Drawing code
 }
 */

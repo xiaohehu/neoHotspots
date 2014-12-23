@@ -8,10 +8,8 @@
 
 #import "ViewController.h"
 #import "neoHotspotsView.h"
-#import "neoHotspotView.h"
 @interface ViewController ()<neoHotspotViewDelegate>
 
-@property (nonatomic, strong) neoHotspotsView *myHotspots;
 @property (nonatomic, strong) NSMutableArray *arr_hotspots;
 @end
 
@@ -36,7 +34,7 @@
     for (int i = 0; i < [totalDataArray count]; i++)
     {
         NSDictionary *hotspot_raw = [[NSDictionary alloc] initWithDictionary:totalDataArray[i]];
-        neoHotspotView *hotspot2 = [[neoHotspotView alloc] initWithHotspotInfo:hotspot_raw];
+        neoHotspotsView *hotspot2 = [[neoHotspotsView alloc] initWithHotspotInfo:hotspot_raw];
         hotspot2.labelAlignment = i;
         hotspot2.tag = i;
         hotspot2.delegate = self;
@@ -46,61 +44,61 @@
 }
 
 
-- (void)didSelectecHotspot:(neoHotspotView *)hotspotView atIndex:(NSInteger)index
+- (void)neoHotspotsView:(neoHotspotsView *)hotspot didSelectItemAtIndex:(NSInteger)index
 {
-    NSLog(@"The hotspot type is %@", hotspotView.contentType);
+    NSLog(@"The hotspot type is %@", hotspot.contentType);
 }
 
 
 
 
--(void)getDataForomPlist
-{
-    
-    NSString *path = [[NSBundle mainBundle] pathForResource:
-					  @"hotspotsData" ofType:@"plist"];
-    NSMutableArray *totalDataArray = [[NSMutableArray alloc] initWithContentsOfFile:path];
-    for (int i = 0; i < [totalDataArray count]; i++) {
-        NSDictionary *hotspotItem = totalDataArray [i];
-        
-        //Get the position of Hs
-        NSString *str_position = [[NSString alloc] initWithString:[hotspotItem objectForKey:@"xy"]];
-        NSRange range = [str_position rangeOfString:@","];
-        NSString *str_x = [str_position substringWithRange:NSMakeRange(0, range.location)];
-        NSString *str_y = [str_position substringFromIndex:(range.location + 1)];
-        float hs_x = [str_x floatValue];
-        float hs_y = [str_y floatValue];
-        _myHotspots = [[neoHotspotsView alloc] initWithFrame:CGRectMake(hs_x, hs_y, 40, 40)];
-        _myHotspots.delegate=self;
-		[_arr_hotspots addObject:_myHotspots];
-		
-        //Get the angle of arrow
-        NSString *str_angle = [[NSString alloc] initWithString:[hotspotItem objectForKey:@"angle"]];
-        if ([str_angle isEqualToString:@""]) {
-        }
-        else
-        {
-            float hsAngle = [str_angle floatValue];
-            _myHotspots.arwAngle = hsAngle;
-        }
-        
-        //Get the name of BG img name
-        NSString *str_bgName = [[NSString alloc] initWithString:[hotspotItem objectForKey:@"background"]];
-        _myHotspots.hotspotBgName = str_bgName;
-        
-        //Get the caption of hotspot
-        NSString *str_caption = [[NSString alloc] initWithString:[hotspotItem objectForKey:@"caption"]];
-        _myHotspots.str_labelText = str_caption;
-        _myHotspots.labelAlignment = CaptionAlignmentBottom;
-        
-        //Get the type of hotspot
-        NSString *str_type = [[NSString alloc] initWithString:[hotspotItem objectForKey:@"type"]];
-        _myHotspots.str_typeOfHs = str_type;
-//        NSLog(@"Hotspot No.%i's type is: %@ \n\n",i ,str_type);
-        
-        //Animation time can be set
-        //_myHotspots.timeRotate = 5.0;
-        _myHotspots.tagOfHs = i;
+//-(void)getDataForomPlist
+//{
+//    
+//    NSString *path = [[NSBundle mainBundle] pathForResource:
+//					  @"hotspotsData" ofType:@"plist"];
+//    NSMutableArray *totalDataArray = [[NSMutableArray alloc] initWithContentsOfFile:path];
+//    for (int i = 0; i < [totalDataArray count]; i++) {
+//        NSDictionary *hotspotItem = totalDataArray [i];
+//        
+//        //Get the position of Hs
+//        NSString *str_position = [[NSString alloc] initWithString:[hotspotItem objectForKey:@"xy"]];
+//        NSRange range = [str_position rangeOfString:@","];
+//        NSString *str_x = [str_position substringWithRange:NSMakeRange(0, range.location)];
+//        NSString *str_y = [str_position substringFromIndex:(range.location + 1)];
+//        float hs_x = [str_x floatValue];
+//        float hs_y = [str_y floatValue];
+//        _myHotspots = [[neoHotspotsView alloc] initWithFrame:CGRectMake(hs_x, hs_y, 40, 40)];
+//        _myHotspots.delegate=self;
+//		[_arr_hotspots addObject:_myHotspots];
+//		
+//        //Get the angle of arrow
+//        NSString *str_angle = [[NSString alloc] initWithString:[hotspotItem objectForKey:@"angle"]];
+//        if ([str_angle isEqualToString:@""]) {
+//        }
+//        else
+//        {
+//            float hsAngle = [str_angle floatValue];
+//            _myHotspots.arwAngle = hsAngle;
+//        }
+//        
+//        //Get the name of BG img name
+//        NSString *str_bgName = [[NSString alloc] initWithString:[hotspotItem objectForKey:@"background"]];
+//        _myHotspots.hotspotBgName = str_bgName;
+//        
+//        //Get the caption of hotspot
+//        NSString *str_caption = [[NSString alloc] initWithString:[hotspotItem objectForKey:@"caption"]];
+//        _myHotspots.str_labelText = str_caption;
+//        _myHotspots.labelAlignment = CaptionAlignmentBottom;
+//        
+//        //Get the type of hotspot
+//        NSString *str_type = [[NSString alloc] initWithString:[hotspotItem objectForKey:@"type"]];
+//        _myHotspots.str_typeOfHs = str_type;
+////        NSLog(@"Hotspot No.%i's type is: %@ \n\n",i ,str_type);
+//        
+//        //Animation time can be set
+//        //_myHotspots.timeRotate = 5.0;
+//        _myHotspots.tagOfHs = i;
 /*
  Chang the label's alignment according to the tag of hotspot
  
@@ -137,23 +135,23 @@
             _myHotspots.labelAlignment = CaptionAlignmentBottomRight;
         }
 */
-        [self.view addSubview:_myHotspots];
-    }
-}
+//        [self.view addSubview:_myHotspots];
+//    }
+//}
 
-#pragma -mark Delegate Method
--(void)neoHotspotsView:(neoHotspotsView *)hotspot didSelectItemAtIndex:(NSInteger)index
-{
-	neoHotspotsView *tmp = _arr_hotspots[index];
-	NSString *fileType = [NSString stringWithFormat:@"Hotspot index is %i and is a type of %@",tmp.tagOfHs, tmp.str_typeOfHs];
-	
-	UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Hotspot Tapped!"
-                                                      message:fileType
-                                                     delegate:nil
-                                            cancelButtonTitle:@"OK"
-                                            otherButtonTitles:nil];
-    [message show];
-}
+//#pragma -mark Delegate Method
+//-(void)neoHotspotsView:(neoHotspotsView *)hotspot didSelectItemAtIndex:(NSInteger)index
+//{
+//	neoHotspotsView *tmp = _arr_hotspots[index];
+//	NSString *fileType = [NSString stringWithFormat:@"Hotspot index is %i and is a type of %@",tmp.tagOfHs, tmp.str_typeOfHs];
+//	
+//	UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Hotspot Tapped!"
+//                                                      message:fileType
+//                                                     delegate:nil
+//                                            cancelButtonTitle:@"OK"
+//                                            otherButtonTitles:nil];
+//    [message show];
+//}
 
 
 

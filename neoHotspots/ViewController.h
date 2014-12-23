@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "neoHotspotsView.h"
-@interface ViewController : UIViewController <neoHotspotsViewDelegate>
+@interface ViewController : UIViewController
 
 @end

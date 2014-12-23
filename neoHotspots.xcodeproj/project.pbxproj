@@ -26,8 +26,7 @@
 		8216730817F4A10300BADC9E /* neoHotspotsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8216730717F4A10300BADC9E /* neoHotspotsTests.m */; };
 		8216731F17F4B47D00BADC9E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8216731D17F4B47D00BADC9E /* ViewController.m */; };
 		8216732017F4B47D00BADC9E /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8216731E17F4B47D00BADC9E /* ViewController.xib */; };
-		8216732817F4B7C000BADC9E /* neoHotspotsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8216732717F4B7C000BADC9E /* neoHotspotsView.m */; };
-		82C5A8851A48AD9D007EB80D /* neoHotspotView.m in Sources */ = {isa = PBXBuildFile; fileRef = 82C5A8841A48AD9D007EB80D /* neoHotspotView.m */; };
+		82C5A8851A48AD9D007EB80D /* neoHotspotsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 82C5A8841A48AD9D007EB80D /* neoHotspotsView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,10 +64,8 @@
 		8216731C17F4B47D00BADC9E /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		8216731D17F4B47D00BADC9E /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		8216731E17F4B47D00BADC9E /* ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ViewController.xib; sourceTree = "<group>"; };
-		8216732617F4B7C000BADC9E /* neoHotspotsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = neoHotspotsView.h; sourceTree = "<group>"; };
-		8216732717F4B7C000BADC9E /* neoHotspotsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = neoHotspotsView.m; sourceTree = "<group>"; };
-		82C5A8831A48AD9D007EB80D /* neoHotspotView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = neoHotspotView.h; sourceTree = "<group>"; };
-		82C5A8841A48AD9D007EB80D /* neoHotspotView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = neoHotspotView.m; sourceTree = "<group>"; };
+		82C5A8831A48AD9D007EB80D /* neoHotspotsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = neoHotspotsView.h; sourceTree = "<group>"; };
+		82C5A8841A48AD9D007EB80D /* neoHotspotsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = neoHotspotsView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,10 +130,8 @@
 				8216731C17F4B47D00BADC9E /* ViewController.h */,
 				8216731D17F4B47D00BADC9E /* ViewController.m */,
 				8216731E17F4B47D00BADC9E /* ViewController.xib */,
-				8216732617F4B7C000BADC9E /* neoHotspotsView.h */,
-				8216732717F4B7C000BADC9E /* neoHotspotsView.m */,
-				82C5A8831A48AD9D007EB80D /* neoHotspotView.h */,
-				82C5A8841A48AD9D007EB80D /* neoHotspotView.m */,
+				82C5A8831A48AD9D007EB80D /* neoHotspotsView.h */,
+				82C5A8841A48AD9D007EB80D /* neoHotspotsView.m */,
 				8210BFE017F6019C003AAE31 /* grfx_avail_view.png */,
 				8210BFE117F6019C003AAE31 /* grfx_avail_view@2x.png */,
 				8210BFE617F621A2003AAE31 /* grfx_btn_rendering.png */,
@@ -279,9 +274,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				82C5A8851A48AD9D007EB80D /* neoHotspotView.m in Sources */,
+				82C5A8851A48AD9D007EB80D /* neoHotspotsView.m in Sources */,
 				821672ED17F4A10300BADC9E /* AppDelegate.m in Sources */,
-				8216732817F4B7C000BADC9E /* neoHotspotsView.m in Sources */,
 				821672E917F4A10300BADC9E /* main.m in Sources */,
 				8216731F17F4B47D00BADC9E /* ViewController.m in Sources */,
 			);
