@@ -49,7 +49,7 @@
     NSLog(@"The hotspot type is %@", hotspot.contentType);
 }
 
-
+//=================================BELOW THIS LINE IS OLD CODE========================================================
 
 
 //-(void)getDataForomPlist
