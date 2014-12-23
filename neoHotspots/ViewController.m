@@ -47,7 +47,7 @@
 
 - (void)didSelectecHotspot:(neoHotspotView *)hotspotView atIndex:(NSInteger)index
 {
-    NSLog(@"The tapped index is %i", (int)index);
+    NSLog(@"The hotspot type is %@", hotspotView.contentType);
 }
 
 
