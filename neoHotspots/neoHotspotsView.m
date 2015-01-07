@@ -49,6 +49,9 @@ static float    kGap = 10.0;
     
     uiiv_hotspotBG = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[dict_rawData objectForKey:@"background"]]];
     
+    self.frame = CGRectMake(x_Value, y_Value, uiiv_hotspotBG.frame.size.width, uiiv_hotspotBG.frame.size.height);
+    uiiv_hotspotBG.frame = self.bounds;
+    
     if ([dict_rawData objectForKey:@"caption"]) {
         labelSize = [[dict_rawData objectForKey:@"caption"] sizeWithAttributes:
                      @{NSFontAttributeName:
@@ -57,12 +60,14 @@ static float    kGap = 10.0;
         [self createCaptionLabel];
     }
     else {
-        uiiv_hotspotBG.frame = CGRectMake(0.0, 0.0, uiiv_hotspotBG.frame.size.width, uiiv_hotspotBG.frame.size.height);
+        uiiv_hotspotBG.frame = self.bounds;
+        [self addSubview: uiiv_hotspotBG];
         if (showArrow) {
             [self createArrow];
         }
     }
     
+    [self addGestureToView];
 }
 
 - (void)createCaptionLabel
@@ -80,9 +85,7 @@ static float    kGap = 10.0;
             {
                 offsetX = 0.0;
             }
-            self.frame = CGRectMake(x_Value - offsetX, y_Value, labelSize.width, uiiv_hotspotBG.frame.size.height + kGap + labelSize.height);
-            uiiv_hotspotBG.frame = CGRectMake(offsetX, 0.0, uiiv_hotspotBG.frame.size.width, uiiv_hotspotBG.frame.size.height);
-            uil_caption = [[UILabel alloc] initWithFrame:CGRectMake(0.0, uiiv_hotspotBG.frame.size.height + kGap, labelSize.width, labelSize.height)];
+            uil_caption = [[UILabel alloc] initWithFrame:CGRectMake(-offsetX, uiiv_hotspotBG.frame.size.height + kGap, labelSize.width, labelSize.height)];
             break;
         }
         case 1:
@@ -96,23 +99,17 @@ static float    kGap = 10.0;
             {
                 offsetX = 0.0;
             }
-            self.frame = CGRectMake(x_Value - offsetX, y_Value - offsetY, labelSize.width, uiiv_hotspotBG.frame.size.height + kGap + labelSize.height);
-            uiiv_hotspotBG.frame = CGRectMake(offsetX, offsetY, uiiv_hotspotBG.frame.size.width, uiiv_hotspotBG.frame.size.height);
-            uil_caption = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, labelSize.width, labelSize.height)];
+            uil_caption = [[UILabel alloc] initWithFrame:CGRectMake(-offsetX, -offsetY, labelSize.width, labelSize.height)];
             break;
         }
         case 2:
         {
             offsetX = labelSize.width + kGap;
-            self.frame = CGRectMake(x_Value - offsetX, y_Value, labelSize.width + kGap + uiiv_hotspotBG.frame.size.width, uiiv_hotspotBG.frame.size.height);
-            uiiv_hotspotBG.frame = CGRectMake(offsetX, offsetY, uiiv_hotspotBG.frame.size.width, uiiv_hotspotBG.frame.size.height);
-            uil_caption = [[UILabel alloc] initWithFrame:CGRectMake(0.0, (uiiv_hotspotBG.frame.size.height - labelSize.height)/2, labelSize.width, labelSize.height)];
+            uil_caption = [[UILabel alloc] initWithFrame:CGRectMake(-offsetX, (uiiv_hotspotBG.frame.size.height - labelSize.height)/2, labelSize.width, labelSize.height)];
             break;
         }
         case 3:
         {
-            self.frame = CGRectMake(x_Value, y_Value, labelSize.width + kGap + uiiv_hotspotBG.frame.size.width, uiiv_hotspotBG.frame.size.height);
-            uiiv_hotspotBG.frame = CGRectMake(offsetX, offsetY, uiiv_hotspotBG.frame.size.width, uiiv_hotspotBG.frame.size.height);
             uil_caption = [[UILabel alloc] initWithFrame:CGRectMake(uiiv_hotspotBG.frame.size.width + kGap, (uiiv_hotspotBG.frame.size.height - labelSize.height)/2, labelSize.width, labelSize.height)];
             break;
         }
@@ -120,31 +117,23 @@ static float    kGap = 10.0;
         {
             offsetX = labelSize.width + kGap;
             offsetY = labelSize.height;
-            self.frame = CGRectMake(x_Value - offsetX, y_Value - offsetY, labelSize.width + kGap + uiiv_hotspotBG.frame.size.width, uiiv_hotspotBG.frame.size.height + labelSize.height);
-            uiiv_hotspotBG.frame = CGRectMake(offsetX, offsetY, uiiv_hotspotBG.frame.size.width, uiiv_hotspotBG.frame.size.height);
-            uil_caption = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, labelSize.width, labelSize.height)];
+            uil_caption = [[UILabel alloc] initWithFrame:CGRectMake(-offsetX, -offsetY, labelSize.width, labelSize.height)];
             break;
         }
         case 5:
         {
             offsetY = labelSize.height;
-            self.frame = CGRectMake(x_Value - offsetX, y_Value - offsetY, labelSize.width + kGap + uiiv_hotspotBG.frame.size.width, uiiv_hotspotBG.frame.size.height + labelSize.height);
-            uiiv_hotspotBG.frame = CGRectMake(offsetX, offsetY, uiiv_hotspotBG.frame.size.width, uiiv_hotspotBG.frame.size.height);
-            uil_caption = [[UILabel alloc] initWithFrame:CGRectMake(uiiv_hotspotBG.frame.size.width + kGap, 0.0, labelSize.width, labelSize.height)];
+            uil_caption = [[UILabel alloc] initWithFrame:CGRectMake(uiiv_hotspotBG.frame.size.width + kGap, -offsetY, labelSize.width, labelSize.height)];
             break;
         }
         case 6:
         {
             offsetX = labelSize.width + kGap;
-            self.frame = CGRectMake(x_Value - offsetX, y_Value, labelSize.width + kGap + uiiv_hotspotBG.frame.size.width, uiiv_hotspotBG.frame.size.height + labelSize.height);
-            uiiv_hotspotBG.frame = CGRectMake(offsetX, offsetY, uiiv_hotspotBG.frame.size.width, uiiv_hotspotBG.frame.size.height);
-            uil_caption = [[UILabel alloc] initWithFrame:CGRectMake(0.0, uiiv_hotspotBG.frame.size.height, labelSize.width, labelSize.height)];
+            uil_caption = [[UILabel alloc] initWithFrame:CGRectMake(-offsetX, uiiv_hotspotBG.frame.size.height, labelSize.width, labelSize.height)];
             break;
         }
         case 7:
         {
-            self.frame = CGRectMake(x_Value, y_Value, labelSize.width + kGap + uiiv_hotspotBG.frame.size.width, uiiv_hotspotBG.frame.size.height + labelSize.height);
-            uiiv_hotspotBG.frame = CGRectMake(offsetX, offsetY, uiiv_hotspotBG.frame.size.width, uiiv_hotspotBG.frame.size.height);
             uil_caption = [[UILabel alloc] initWithFrame:CGRectMake(uiiv_hotspotBG.frame.size.width + kGap, uiiv_hotspotBG.frame.size.height, labelSize.width, labelSize.height)];
             break;
         }
@@ -159,7 +148,6 @@ static float    kGap = 10.0;
     uiiv_hotspotBG.backgroundColor = [UIColor greenColor];
     [self addSubview: uiiv_hotspotBG];
     [self addSubview: uil_caption];
-    [self addGestureToView];
     if (showArrow) {
         [self createArrow];
     }
@@ -182,6 +170,15 @@ static float    kGap = 10.0;
 //    [uil_caption addGestureRecognizer: tapOnLabel];
 }
 
+-(BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
+    {
+    if ( CGRectContainsPoint(uiiv_arrowImg.frame, point) || CGRectContainsPoint(uil_caption.frame, point) )
+        return YES;
+
+    return [super pointInside:point withEvent:event];
+    }
+
+
 - (void)tapHotspot:(UIGestureRecognizer *)gesture
 {
     [self.delegate neoHotspotsView:self didSelectItemAtIndex:self.tag];
@@ -201,7 +198,9 @@ static float    kGap = 10.0;
         arrowAngle = [[dict_rawData objectForKey:@"angle"] floatValue];
     }
     else {
-        arrowAngle = 0.0;
+        [uiiv_arrowImg removeFromSuperview];
+        return;
+//        arrowAngle = 0.0;
     }
     
     CGRect oldFrame = uiiv_arrowImg.frame;

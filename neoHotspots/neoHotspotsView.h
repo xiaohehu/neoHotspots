@@ -45,7 +45,7 @@ typedef enum {
 @property (nonatomic, readwrite) BOOL                       showArrow;
 @property (nonatomic, strong) id                            delegate;
 @property (nonatomic, strong) NSDictionary                  *dict_rawData;
-@property (nonatomic, assign) HotspotCaptionAlignment      labelAlignment;
+@property (nonatomic, assign) HotspotCaptionAlignment       labelAlignment;
 @property (nonatomic, strong) NSString                      *contentType;
 @property (nonatomic, strong) NSString                      *contentFileName;
 
