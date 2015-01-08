@@ -48,6 +48,11 @@
 - (void)neoHotspotsView:(neoHotspotsView *)hotspot didSelectItemAtIndex:(NSInteger)index
 {
     NSLog(@"The hotspot type is %@", hotspot.contentType);
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
+                                                    message:[NSString stringWithFormat:@"The hotspot's type is %@",hotspot.contentType]
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK" otherButtonTitles: nil];
+    [alert show];
 }
 
 //=================================BELOW THIS LINE IS OLD CODE========================================================
