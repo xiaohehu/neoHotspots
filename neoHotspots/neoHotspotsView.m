@@ -34,9 +34,12 @@ static float    kGap = 10.0;
     [self prepareData];
 }
 
+//----------------------------------------------------
+#pragma mark - Read data from dictionary
+//----------------------------------------------------
 - (void)prepareData
 {
-    //Get the position of Hs
+    //Get the position of hotspot
     NSString *str_position = [[NSString alloc] initWithString:[dict_rawData objectForKey:@"xy"]];
     NSRange range = [str_position rangeOfString:@","];
     NSString *str_x = [str_position substringWithRange:NSMakeRange(0, range.location)];
@@ -44,14 +47,16 @@ static float    kGap = 10.0;
     x_Value = [str_x floatValue];
     y_Value = [str_y floatValue];
     
+    // Get content file's name of hotspot
     contentType = [[NSString alloc] initWithString:[dict_rawData objectForKey:@"type"]];
     contentFileName = [[NSString alloc] initWithString:[dict_rawData objectForKey:@"fileName"]];
-    
+
+    // Get hotspot's background image and set view size same as the image
     uiiv_hotspotBG = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[dict_rawData objectForKey:@"background"]]];
-    
     self.frame = CGRectMake(x_Value, y_Value, uiiv_hotspotBG.frame.size.width, uiiv_hotspotBG.frame.size.height);
     uiiv_hotspotBG.frame = self.bounds;
     
+    // Get catpion string and create the label
     if ([dict_rawData objectForKey:@"caption"]) {
         labelSize = [[dict_rawData objectForKey:@"caption"] sizeWithAttributes:
                      @{NSFontAttributeName:
@@ -59,16 +64,19 @@ static float    kGap = 10.0;
         
         [self createCaptionLabel];
     }
-    else {
-        uiiv_hotspotBG.frame = self.bounds;
-        [self addSubview: uiiv_hotspotBG];
-        if (showArrow) {
-            [self createArrow];
-        }
+
+    // Create arrow image
+    if (showArrow) {
+        [self createArrow];
     }
     
+    // Add tap gesture to hotspot
     [self addGestureToView];
 }
+
+//----------------------------------------------------
+#pragma mark - Create caption label
+//----------------------------------------------------
 
 - (void)createCaptionLabel
 {
@@ -143,46 +151,14 @@ static float    kGap = 10.0;
     
     uil_caption.text = [dict_rawData objectForKey:@"caption"];
     uil_caption.font = [UIFont fontWithName:kFontName size:kFontSize];
-    self.backgroundColor = [UIColor redColor];
     uil_caption.backgroundColor = [UIColor whiteColor];
-    uiiv_hotspotBG.backgroundColor = [UIColor greenColor];
     [self addSubview: uiiv_hotspotBG];
     [self addSubview: uil_caption];
-    if (showArrow) {
-        [self createArrow];
-    }
 }
 
-- (void)addGestureToView
-{
-    self.userInteractionEnabled = YES;
-    UITapGestureRecognizer *tapOnView = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapHotspot:)];
-    tapOnView.numberOfTapsRequired = 1;
-    [self addGestureRecognizer:tapOnView];
-//    UITapGestureRecognizer *tapOnImage = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapHotspot:)];
-//    tapOnImage.numberOfTapsRequired = 1;
-//    uiiv_hotspotBG.userInteractionEnabled = YES;
-//    [uiiv_hotspotBG addGestureRecognizer:tapOnImage];
-//    
-//    UITapGestureRecognizer *tapOnLabel = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapHotspot:)];
-//    tapOnLabel.numberOfTapsRequired = 1;
-//    uil_caption.userInteractionEnabled = YES;
-//    [uil_caption addGestureRecognizer: tapOnLabel];
-}
-
--(BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
-    {
-    if ( CGRectContainsPoint(uiiv_arrowImg.frame, point) || CGRectContainsPoint(uil_caption.frame, point) )
-        return YES;
-
-    return [super pointInside:point withEvent:event];
-    }
-
-
-- (void)tapHotspot:(UIGestureRecognizer *)gesture
-{
-    [self.delegate neoHotspotsView:self didSelectItemAtIndex:self.tag];
-}
+//----------------------------------------------------
+#pragma mark - Create arrow image
+//----------------------------------------------------
 
 - (void)createArrow
 {
@@ -191,7 +167,7 @@ static float    kGap = 10.0;
     float radius = sqrtf(width*width + height*height);
     
     uiiv_arrowImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"grfx_avail_view.png"]];
-    uiiv_arrowImg.frame = CGRectMake((uiiv_hotspotBG.frame.size.width - uiiv_arrowImg.frame.size.width)/2 + uiiv_hotspotBG.frame.origin.x, uiiv_hotspotBG.frame.origin.y - (radius-uiiv_hotspotBG.frame.size.height) - uiiv_arrowImg.frame.size.height, uiiv_arrowImg.frame.size.width, uiiv_arrowImg.frame.size.height);
+    uiiv_arrowImg.frame = CGRectMake(abs(uiiv_hotspotBG.frame.size.width - uiiv_arrowImg.frame.size.width)/2 + uiiv_hotspotBG.frame.origin.x, uiiv_hotspotBG.frame.origin.y - (radius-uiiv_hotspotBG.frame.size.height) - uiiv_arrowImg.frame.size.height, uiiv_arrowImg.frame.size.width, uiiv_arrowImg.frame.size.height);
     [self addSubview: uiiv_arrowImg];
     
     if ([dict_rawData objectForKey:@"angle"]) {
@@ -200,7 +176,7 @@ static float    kGap = 10.0;
     else {
         [uiiv_arrowImg removeFromSuperview];
         return;
-//        arrowAngle = 0.0;
+        //        arrowAngle = 0.0;
     }
     
     CGRect oldFrame = uiiv_arrowImg.frame;
@@ -208,6 +184,53 @@ static float    kGap = 10.0;
     uiiv_arrowImg.frame = oldFrame;
     
     uiiv_arrowImg.transform = CGAffineTransformMakeRotation((arrowAngle/180)*M_PI);
+}
+
+//----------------------------------------------------
+#pragma mark - Add tap gesture to hotspot
+//----------------------------------------------------
+
+- (void)addGestureToView
+{
+    self.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tapOnView = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapHotspot:)];
+    tapOnView.numberOfTapsRequired = 1;
+    [self addGestureRecognizer:tapOnView];
+}
+
+- (void)tapHotspot:(UIGestureRecognizer *)gesture
+{
+    [self.delegate neoHotspotsView:self didSelectItemAtIndex:self.tag];
+}
+
+//----------------------------------------------------
+#pragma mark Make outbounded arrow and label tappable
+//----------------------------------------------------
+
+-(BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
+{
+    if ( CGRectContainsPoint(uiiv_arrowImg.frame, point) || CGRectContainsPoint(uil_caption.frame, point) )
+        return YES;
+    
+    return [super pointInside:point withEvent:event];
+}
+
+//----------------------------------------------------
+#pragma mark - Clean Memory
+//----------------------------------------------------
+
+- (void)removeFromSuperview
+{
+    [super removeFromSuperview];
+    
+//    [uiiv_hotspotBG removeFromSuperview];
+//    uiiv_hotspotBG = nil;
+//    
+//    [uiiv_arrowImg removeFromSuperview];
+//    uiiv_arrowImg = nil;
+//    
+//    [uil_caption removeFromSuperview];
+//    uil_caption = nil;
 }
 
 /*

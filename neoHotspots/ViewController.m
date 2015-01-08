@@ -39,6 +39,7 @@
         hotspot2.tag = i;
         hotspot2.delegate = self;
         hotspot2.showArrow = YES;
+        [_arr_hotspots addObject: hotspot2];
         [self.view addSubview: hotspot2];
     }
 }
@@ -153,7 +154,20 @@
 //    [message show];
 //}
 
-
+- (IBAction)addHotspots:(id)sender {
+    
+    [self clearHotspots:nil];
+    [self loadHotspotView];
+}
+- (IBAction)clearHotspots:(id)sender {
+    
+    for (neoHotspotsView __strong *view in _arr_hotspots) {
+        [view removeFromSuperview];
+        view = nil;
+    }
+    
+    [_arr_hotspots removeAllObjects];
+}
 
 -(void)viewWillAppear:(BOOL)animated
 {
